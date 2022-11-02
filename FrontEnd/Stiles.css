@@ -1,4 +1,4 @@
-#endScreen {
+#endScreen, #twoPlayerScreen, #gameScreen {
     display: none;
 }
 html {
