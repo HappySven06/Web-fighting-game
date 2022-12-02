@@ -43,7 +43,7 @@ opacity:0.8; /*Tee element pisut läbipaistvaks*/
 }
 .Terminal, .Actions {
     text-align: center;
-    background-color: #FFF;
+    background-color: rgb(241, 241, 236);
     padding: 25px 25px;
     margin: 5px 200px;
     box-shadow: 5px 5px 15px #00000057;

@@ -4,27 +4,27 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>checkTemp interface</title>
+		<title>Fighting game</title>
 		<link rel="stylesheet" href="Stiles.css" type="text/css">
 	</head>
 
-	<body>
+	<body onload="TurnRandomiser()">
 		<div class="header" id="myHeader">
 			<div class="navbar">
-				<a onclick="mainMenue();">Menu</a>
+				<a href="Index.html">Menu</a>
 			</div>
 		</div>
 
-		<div class="screen" id="gameScreen">
+		<div class="screen" id="gameScreenVersus">
 			<center>
 				<h1>Web game</h1>
 			</center>
 	
 			<div class="Terminal">
-                <h3 id="PlayerTurns"></h3>
+                <p id="PlayerTurns">h</p>
 
 				<p id="PlayerHealth">Player1 health: 100</p>
-				<p id="EnemyHealth">Player2 health: 110</p>
+				<p id="EnemyHealth">Player2 health: 100</p>
 	
 				<canvas>
 	
@@ -73,6 +73,6 @@
 		</div>
 	</body>
 	
-	<script type="text/javascript" src="../SwichCommands.js"></script>
+	<script type="text/javascript" src="../swichCommands.js"></script>
 	<script type="text/javascript" src="../playerVersus.js"></script>
 </html>

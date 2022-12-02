@@ -1,13 +1,45 @@
-let p1Health;
-let p2Health;
+player1 = {
+    health: 100,
+
+    damage: function()
+    {
+        this.health -= 10;
+        p1Health = JSON.stringify(this.health)
+    },
+
+    heal: function()
+    {
+        this.health += 20;
+        p1Health = JSON.stringify(this.health)
+    }
+}
+
+player2 ={
+    health: 100,
+
+    damage: function()
+    {
+        this.health -= 10;
+        p2Health = JSON.stringify(this.health)
+    },
+
+    heal: function()
+    {
+        this.health += 20;
+        p2Health = JSON.stringify(this.health)
+    }
+}
+
+p1Health = player1.health;
+p2Health = player2.health;
 
 p1Attack = false;
 p2Attack = false;
 p1Heal = false;
 p2Heal = false;
 
-let turns;
-let playerTurn;
+let turns = 0;
+let playerTurn = "PUTSIS";
 let winner;
 
 let p1TotalHealth = []; //Total health used by player1
@@ -20,39 +52,43 @@ let p2ToatalHealthAdded = 0;
 let p1ToataldamageAdded = 0; 
 let p2ToatalDamageAdded = 0;
 
-min = 1;
-max = 10;
-
-var Rand = Math.random() * (max - min) + min;
-Rand = parseInt(Rand)
-Math.trunc(Rand);
-
-vastus = Rand % 2;
-console.log(vastus);
-
-if(vastus == 1)
+function TurnRandomiser()
 {
-    playerTurn = 1
-}
-if(vastus == 0)
-{
-    playerTurn = 2
-}
+    min = 1;
+    max = 10;
 
-document.getElementById("#PlayerTurns").textContent = "player" + playerTurn + " turn";
+    var Rand = Math.random() * (max - min) + min;
+    Rand = parseInt(Rand);
+    Math.trunc(Rand);
+
+    vastus = Rand % 2;
+    console.log(vastus);
+
+    if(vastus == 1)
+    {
+        playerTurn = 1
+    }
+    if(vastus == 0)
+    {
+        playerTurn = 2
+    }
+
+    let header = document.querySelector("#PlayerTurns");
+    header.innerText = "player " + playerTurn + " turn";
+}
 
 function action(action) //Main function called bt html and player controller
 {
+    console.log("debug1"); //debug
+
     if(action == 1)
     {
         if(playerTurn == 1)
         {
-            player1.damage();
             p1Attack = true;
         }
         if(playerTurn == 2)
         {
-            player2.damage();
             p2Attack = true;
         }
     }
@@ -60,12 +96,10 @@ function action(action) //Main function called bt html and player controller
     {
         if(playerTurn == 1)
         {
-            player1.heal();
             p1Heal = true;
         }
         if(playerTurn == 2)
         {
-            player2.heal();
             p2Heal = true;
         }
     }
@@ -73,14 +107,21 @@ function action(action) //Main function called bt html and player controller
     if(playerTurn == 1)
     {
         playerTurn = 2
+
+        let header = document.querySelector("#PlayerTurns");
+        header.innerText = "player " + playerTurn + " turn";
     }
     if(playerTurn == 2)
     {
         playerTurn = 1
+
+        let header = document.querySelector("#PlayerTurns");
+        header.innerText = "player " + playerTurn + " turn";
     }
 
     turns ++;
 
+    console.log("turns: "+ turns)
     if(turns == 2)
     {
         calculateMoves()
@@ -91,11 +132,11 @@ function calculateMoves()
 {
     if(p1Attack == true)
     {
-        player1.damage();
+        player2.damage();
     }
     if(p2Attack == true)
     {
-        player2.damage();
+        player1.damage();
     }
     if(p1Heal == true)
     {
@@ -106,8 +147,10 @@ function calculateMoves()
         player2.heal();
     }
 
-    document.getElementById("#PlayerHealth").textContent = "Player1 health: " + p1Health;
-    document.getElementById("#EnemyHealth").textContent = "Player2 health: " + p2Health;
+    let header = document.querySelector("#PlayerHealth");
+    header.innerText = "Player1 health: " + p1Health;
+    let headerr = document.querySelector("#EnemyHealth");
+    headerr.innerText = "Player2 health: " + p2Health;
 
     log();
 
@@ -120,6 +163,29 @@ function calculateMoves()
     {
         winner = "Player2";
         gameOver();
+    }
+
+    turns = 0;
+    p1Attack = false;
+    p2Attack = false;
+    p1Heal = false;
+    p2Heal = false;
+
+    if(playerTurn == 1)
+    {
+        playerTurn = 2;
+        console.log(playerTurn);
+
+        let header = document.querySelector("#PlayerTurns");
+        header.innerText = "player " + playerTurn + " turn";
+    }
+    else if(playerTurn == 2)
+    {
+        playerTurn = 1;
+        console.log(playerTurn);
+
+        let header = document.querySelector("#PlayerTurns");
+        header.innerText = "player " + playerTurn + " turn";
     }
 }
 
@@ -166,7 +232,7 @@ function gameOver()
     console.log("Player2 total damage given: " + p2ToatalDamageAdded);
     console.log("----------");
 
-    document.getElementById("gameScreen").style.display = "none";
+    document.getElementById("gameScreenVersus").style.display = "none";
     document.getElementById("endScreen").style.display = "block";
 
     document.getElementById("GameWinner").innerHTML = "Winner: " + winner;
@@ -178,8 +244,11 @@ function gameOver()
 
 function playAgain()
 {
-    p1Health;
-    p2Health;
+    player1.health = 100;
+    player2.health = 100;
+
+    p1Health = 100;
+    p2Health = 100;
 
     p1Attack = false;
     p2Attack = false;
@@ -188,7 +257,7 @@ function playAgain()
 
     turns = 0;
     playerTurn;
-    winner = "mina";
+    winner = "meie";
 
     p1TotalHealth.length = 0;
     p2TotalHealth.length = 0;
@@ -200,41 +269,11 @@ function playAgain()
     p1ToataldamageAdded = 0; 
     p2ToatalDamageAdded = 0;
 
-    document.getElementById("#PlayerHealth").textContent = "Player1 health: " + p1Health;
-    document.getElementById("#EnemyHealth").textContent = "Player2 health: " + p1Health;
+    let headerrr = document.querySelector("#PlayerHealth");
+    headerrr.innerText = "Player1 health: " + p1Health;
+    let headerrrr = document.querySelector("#EnemyHealth");
+    headerrrr.innerText = "Player2 health: " + p2Health;
 
     document.getElementById("endScreen").style.display = "none";
-    document.getElementById("gameScreen").style.display = "block";
-}
-
-player1 = {
-    health: 100,
-
-    damage: function()
-    {
-        this.health -= 10;
-        p1Health = JSON.stringify(this.health)
-    },
-
-    heal: function()
-    {
-        this.health += 20;
-        p1Health = JSON.stringify(this.health)
-    }
-}
-
-player2 ={
-    health: 100,
-
-    damage: function()
-    {
-        this.health -= 10;
-        p2Health = JSON.stringify(this.health)
-    },
-
-    heal: function()
-    {
-        this.health += 20;
-        p2Health = JSON.stringify(this.health)
-    }
+    document.getElementById("gameScreenVersus").style.display = "block";
 }
